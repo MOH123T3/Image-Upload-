@@ -32,4 +32,16 @@ String? filePath;
      request.fields['user_id'] = widget.uid;
 
     var response = await request.send();
+    
+    
+    
+    /////////////////////////////////////////////////////////////////////////// 
+    
+    Flutter  How to  get Image from Local Path --- 
+
+
+Image.file(
+    File(
+        'Your local path'),
+)
 
