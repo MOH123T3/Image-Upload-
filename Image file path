@@ -1,0 +1,35 @@
+String? filePath;
+
+
+  String dir = (await getApplicationDocumentsDirectory()).path;
+  File file = File(
+      "$dir/" + DateTime.now().millisecondsSinceEpoch.toString() + ".jpg");
+
+    final encodedStr = jsonDecode(widget.response)['profilePhoto'];
+    Uint8List bytes = base64.decode(encodedStr);
+    await file.writeAsBytes(bytes);
+
+
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse("url "),
+    );
+
+    Map<String, String> headers = {
+      "Authorization": "Bearer ${'token'}",
+      "Content-type": "multipart/form-data"
+    };
+
+    request.files.add(
+      http.MultipartFile.fromBytes("profile_image", file.readAsBytesSync(),
+          filename: "${file.path.split(".").last}",
+          contentType: MediaType("image", "${file.path.split(".").last}")),
+    );
+
+    request.headers.addAll(headers);
+  
+     request.fields['user_id'] = widget.uid;
+
+    var response = await request.send();
+
